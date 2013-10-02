@@ -2,7 +2,7 @@
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
-import ConstantsDefined as cds
+import ConstantsDefined as Cds
 
 
 class Types(models.Model):
@@ -22,6 +22,9 @@ class Types(models.Model):
         get_latest_by = "-add_date"
         verbose_name = "Типы"
         verbose_name_plural = "Типы"
+
+    def __init__(self, *args, **kwargs):
+        super(Types, self).__init__(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -45,6 +48,9 @@ class Tag(models.Model):
         get_latest_by = "-add_date"
         verbose_name = "Поисковые теги"
         verbose_name_plural = "Поисковые теги"
+
+    def __init__(self, *args, **kwargs):
+        super(Tag, self).__init__(*args, **kwargs)
 
     def __str__(self):
         return self.tag_name
@@ -70,6 +76,9 @@ class File(models.Model):
         get_latest_by = "-add_date"
         verbose_name = "Файлы"
         verbose_name_plural = "Файлы"
+
+    def __init__(self, *args, **kwargs):
+        super(File, self).__init__(*args, **kwargs)
 
     def extract_ext(self):
         ext = "{0}".format(self.content_type.prefix)
@@ -101,6 +110,9 @@ class Image(models.Model):
         verbose_name = "Изображения"
         verbose_name_plural = "Изображения"
 
+    def __init__(self, *args, **kwargs):
+        super(Image, self).__init__(*args, **kwargs)
+
     def extract_ext(self):
         ext = "{0}".format(self.content_type.prefix)
         #ext = ext.split("_").reverse()
@@ -114,6 +126,7 @@ class Image(models.Model):
 
 
 class Publishers(models.Model):
+    publisher = models.ForeignKey(User, verbose_name="Создатель")
     name = models.CharField(max_length=30, verbose_name="Название")
     address = models.CharField(max_length=50, verbose_name="Адрес")
     city = models.CharField(max_length=60, verbose_name="Город")
@@ -125,18 +138,18 @@ class Publishers(models.Model):
         def __init__(self):
             pass
 
+        db_table = 'BK_Publishers'
         verbose_name = "Издатель"
         verbose_name_plural = "Издатель Книг"
         ordering = ["city", "name"]
 
-    class Admin(object):
-        def __init__(self):
-            pass
+    def __init__(self, *args, **kwargs):
+        super(Publishers, self).__init__(*args, **kwargs)
 
-    def countA(self):
+    def count_a(self):
         return Books.objects.filter(book_publisher=self.id).count()
 
-    def countV(self):
+    def count_v(self):
         return Books.objects.filter(book_publisher=self.id, is_on=True).count()
 
     def __unicode__(self):
@@ -144,6 +157,7 @@ class Publishers(models.Model):
 
 
 class Author(models.Model):
+    publisher = models.ForeignKey(User, verbose_name="Создатель")
     salutation = models.CharField(max_length=10, blank=True, verbose_name="Приветсвие")
     first_name = models.CharField(max_length=30, verbose_name="Имя")
     last_name = models.CharField(max_length=40, verbose_name="Фамилия")
@@ -154,35 +168,37 @@ class Author(models.Model):
         def __init__(self):
             pass
 
+        db_table = 'BK_Authors'
         verbose_name = "Автор(ы)"
         verbose_name_plural = "Автор(ы) Книг"
         ordering = ["email"]
 
-    class Admin(object):
-        def __init__(self):
-            pass
+    def __init__(self, *args, **kwargs):
+        super(Author, self).__init__(*args, **kwargs)
 
-    def countA(self):
-        return Books.objects.filter(book_publisher=self.id).count()
+    def count_a(self):
+        return Books.objects.filter(authors=self.id).count()
 
-    def countV(self):
-        return Books.objects.filter(book_publisher=self.id, is_on=True).count()
+    def count_v(self):
+        return Books.objects.filter(authors=self.id, is_on=True).count()
 
     def __unicode__(self):
         return '%s %s' % (self.first_name, self.last_name)
 
-    def _get_full_name(self):
-        "Returns the person's full name."
+    def get_full_name(self):
         return '%s %s %s' % (self.salutation, self.first_name, self.last_name)
-    full_name = property(_get_full_name)
+
+    #full_name = property(get_full_name)
 
 
 class BookCategories(models.Model):
     publisher = models.ForeignKey(User, verbose_name="Создатель")
     childs = models.ManyToManyField('self', symmetrical=False, blank=True, verbose_name="потомки")
     title = models.CharField(max_length=255, verbose_name="Название")
+    verb_title = models.CharField(max_length=255, blank=True, verbose_name="Code Page")
     descr = models.TextField(blank=True, verbose_name="Описание")
-    add_date = models.DateField(default=datetime.date.today, verbose_name="Дата создания")	#default=datetime.date.today,
+    add_date = models.DateField(default=datetime.date.today,
+                                verbose_name="Дата создания")    #default=datetime.date.today,
     is_secret = models.BooleanField(verbose_name="Не отображать пользователям")
     is_root = models.BooleanField(blank=True, verbose_name="В корне")
     is_on = models.BooleanField(verbose_name="Вкл.")
@@ -197,20 +213,29 @@ class BookCategories(models.Model):
         verbose_name = "Категории Книг"
         verbose_name_plural = "Категории Книг"
 
-    def countA(self):
+    def __init__(self, *args, **kwargs):
+        super(BookCategories, self).__init__(*args, **kwargs)
+        self.verb_title = Cds.exclude_bad_symbols(Cds.translit_srt(self.title))
+
+    def count_a(self):
         return Books.objects.filter(parent=self.id).count()
 
-    def countV(self):
+    def count_v(self):
         return Books.objects.filter(parent=self.id, is_on=True).count()
 
-    def countVNS(self):
+    def count_vns(self):
         return Books.objects.filter(parent=self.id, is_on=True, is_secret=False).count()
 
-    def countS(self):
+    def count_s(self):
         return Books.objects.filter(parent=self.id, is_secret=True).count()
 
-    def countSV(self):
+    def count_sv(self):
         return Books.objects.filter(parent=self.id, is_on=True, is_secret=True).count()
+
+    def save(self, *args, **kwargs):
+        if self.verb_title is None:
+            pass
+        super(BookCategories, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -226,12 +251,13 @@ class Books(models.Model):
     parent = models.ForeignKey(BookCategories, verbose_name="Родитель")
     add_date = models.DateField(default=datetime.date.today, verbose_name="Дата создания")
     title = models.CharField(max_length=255, verbose_name="Название")
-    authors = models.ManyToManyField(Author, symmetrical=False, verbose_name="Авторы")
+    verb_title = models.CharField(max_length=255, blank=True, verbose_name="Code Page")
+    authors = models.ManyToManyField(Author, symmetrical=False, blank=True, verbose_name="Авторы")  #related_name='they_link_me'
     book_publisher = models.ForeignKey(Publishers, verbose_name="Издатель")
     publication_date = models.DateField(verbose_name="Дата публикации книги")
     breif_descr = models.CharField(max_length=255, verbose_name="Сокращённое описание")
     descr = models.TextField(blank=True, verbose_name="Описание")
-    tags = models.ManyToManyField(Tag, symmetrical=False, verbose_name="Поисковые теги")
+    tags = models.ManyToManyField(Tag, symmetrical=False, blank=True, verbose_name="Поисковые теги")
     bk_isbn = models.CharField(max_length=25, verbose_name="ISBN код")
     bk_lang = models.CharField(max_length=60, verbose_name="Язык книги")
     bk_pages = models.PositiveIntegerField(verbose_name="Количество страниц")
@@ -250,6 +276,15 @@ class Books(models.Model):
         get_latest_by = "-add_date"
         verbose_name = "Записи Книг"
         verbose_name_plural = "Записи Книг"
+
+    def __init__(self, *args, **kwargs):
+        super(Books, self).__init__(*args, **kwargs)
+        self.verb_title = Cds.exclude_bad_symbols(Cds.translit_srt(self.title))
+
+    def save(self, *args, **kwargs):
+        if self.verb_title is None:
+            pass
+        super(Books, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -273,6 +308,9 @@ class BooksImages(models.Model):
         verbose_name = "Изображения к записям книг"
         verbose_name_plural = "Изображения к записям книг"
 
+    def __init__(self, *args, **kwargs):
+        super(BooksImages, self).__init__(*args, **kwargs)
+
     def __unicode__(self):
         return u"[{1}] Изображения к книге #{0}".format(self.parent, self.id)
 
@@ -291,6 +329,9 @@ class BooksFiles(models.Model):
         get_latest_by = "-parent"
         verbose_name = "Файлы к записям книг"
         verbose_name_plural = "Файлы к записям книг"
+
+    def __init__(self, *args, **kwargs):
+        super(BooksFiles, self).__init__(*args, **kwargs)
 
     def __unicode__(self):
         return u"[{1}] Файлы к книге #{0}".format(self.parent, self.id)
@@ -322,10 +363,10 @@ class BooksNews(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(BooksNews, self).__init__(*args, **kwargs)
-        self.verb_title = cds.exclude_bad_symbols(cds.translit_srt(self.title))
+        self.verb_title = Cds.exclude_bad_symbols(Cds.translit_srt(self.title))
 
     def save(self, *args, **kwargs):
-        if (self.verb_title is None):
+        if self.verb_title is None:
             pass
         super(BooksNews, self).save(*args, **kwargs)
 

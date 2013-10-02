@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 __author__ = 'varnavis'
 import os
-import ConstantsDefined as cds
+import ConstantsDefined as Cds
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(cds.BASE_ROOT, 'db/books_data.sqlite').replace('\\','/'),                      # Or path to database file if using sqlite3.
+        'NAME': os.path.join(Cds.BASE_ROOT, 'db/books_data3.sqlite').replace('\\','/'),                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         #'USER': '',
         #'PASSWORD': '',
@@ -57,12 +57,12 @@ APPEND_SLASH = True  #ожидать ли завершающий слеш в к�
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = cds.MEDIA_DIR_ROOT
+MEDIA_ROOT = Cds.MEDIA_DIR_ROOT
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = os.path.join(cds.BASE_PREF, "media/").replace("//","/")
+MEDIA_URL = os.path.join(Cds.BASE_PREF, "media/").replace("//","/")
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -117,7 +117,6 @@ ROOT_URLCONF = 'Books.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'Books.wsgi.application'
 
-import os
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), '..', 'templates').replace('\\','/'),)
 
 

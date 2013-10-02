@@ -15,8 +15,8 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('publication_date',)
     date_hierarchy = 'publication_date'
     #ordering = ('-publication_date',)
-    fields = ('title', 'authors', 'book_publisher', 'publication_date')
-    filter_horizontal = ('authors',)
+    #fields = ('title', 'authors', 'book_publisher', 'publication_date')
+    #filter_horizontal = ('authors',)
     #raw_id_fields = ('publisher',)
 
 
@@ -34,8 +34,38 @@ class BooksNewsAdmin(admin.ModelAdmin):
     date_hierarchy = 'expire_date'
 
 
+class TypesAdmin(admin.ModelAdmin):
+    list_filter = ('id',)
+
+
+class TagAdmin(admin.ModelAdmin):
+    list_filter = ('id',)
+
+
+class FileAdmin(admin.ModelAdmin):
+    list_filter = ('id',)
+
+
+class ImageAdmin(admin.ModelAdmin):
+    list_filter = ('id',)
+
+
+class BooksImagesAdmin(admin.ModelAdmin):
+    list_filter = ('id',)
+
+
+class BooksFilesAdmin(admin.ModelAdmin):
+    list_filter = ('id',)
+
+
+admin.site.register(Types, TypesAdmin)
+admin.site.register(Tag, TagAdmin)
+admin.site.register(File, FileAdmin)
+admin.site.register(Image, ImageAdmin)
 admin.site.register(Publishers, PublisherAdmin)
 admin.site.register(Author, AuthorAdmin)
-admin.site.register(Books, BookAdmin)
 admin.site.register(BookCategories, BooksCategoriesAdmin)
+admin.site.register(Books, BookAdmin)
+admin.site.register(BooksImages, BooksImagesAdmin)
+admin.site.register(BooksFiles, BooksFilesAdmin)
 admin.site.register(BooksNews, BooksNewsAdmin)

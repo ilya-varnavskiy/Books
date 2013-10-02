@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 __author__ = 'varnavis'
 from django.http import HttpResponse
-import ConstantsDefined as cds
+import ConstantsDefined as Cds
 
 
 def load_home(request):
@@ -16,14 +16,14 @@ def load_home(request):
 
 def thanks(request):
     from django.shortcuts import render_to_response
-    dt_meta = cds.get_metadata()
+    dt_meta = Cds.get_metadata()
     dt_meta.update({"title":'Контакты - Сообщение успешно отправлено', "keywords": 'FAQ, написать сообщение администратору.'})
     dct = {
             "meta_data": dt_meta,
             "is_contact" : True,
             "title_content": 'Благодарим за обращениек нашему ресурсу FAQTHEME by IT. <br><br>Ваше сообщение успешно отпрвлено.',
            }
-    dct = cds.get_csrf_metadata(request, **dct)
+    dct = Cds.get_csrf_metadata(request, **dct)
     return render_to_response('contact_thanks.html', dct)
 
 
@@ -38,7 +38,7 @@ def contact(request):
            'robots_content' : "NONE,NOARCHIVE",
            'generator_content' : "[Django] ver {0}.{1}.{2}.{4} - {3}".format(*django.VERSION) ,
            }
-    dct = cds.get_csrf_metadata(request, **dct)
+    dct = Cds.get_csrf_metadata(request, **dct)
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():

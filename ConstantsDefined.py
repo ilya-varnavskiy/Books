@@ -106,18 +106,18 @@ def display_meta(request):
     return HttpResponse('<table>%s</table>' % '\n'.join(html))
 
 
-def translit_srt(str):
+def translit_srt(str_r):
     symbols = ( u"абвгдеёзийклмнопрстуфхъыьэАБВГДЕЁЗИЙКЛМНОПРСТУФХЪЫЬЭ",
                 u"abvgdeezijklmnoprstufh-y_eABVGDEEZIJKLMNOPRSTUFH-Y_E")
 
     tr = {ord(a):ord(b) for a, b in zip(*symbols)}
 
-    return str.translate(tr)
+    return str_r.translate(tr)
 
 
-def exclude_bad_symbols(str):
+def exclude_bad_symbols(str_r):
     import re
 
     chars = [',', '!', '\"', ';', '?', '$', '@', '%', '#', '&', '+', '\\', '/', '*']
 
-    return re.sub('[%s]' % ''.join(chars), '', str)
+    return re.sub('[%s]' % ''.join(chars), '', str_r)
