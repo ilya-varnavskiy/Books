@@ -13,7 +13,10 @@ class Types(models.Model):
     add_date = models.DateField(default=datetime.date.today, verbose_name="Дата создания")
     is_on = models.BooleanField(verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_Types'
         ordering = ["publisher", "add_date"]
         get_latest_by = "-add_date"
@@ -33,7 +36,10 @@ class Tag(models.Model):
     add_date = models.DateField(default=datetime.date.today, verbose_name="Дата создания")
     is_on = models.BooleanField(verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_Tags'
         ordering = ["publisher", "add_date"]
         get_latest_by = "-add_date"
@@ -55,7 +61,10 @@ class File(models.Model):
     content_type = models.ForeignKey(Types, verbose_name="Тип файла")
     is_on = models.BooleanField(verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_Files'
         ordering = ["publisher", "add_date"]
         get_latest_by = "-add_date"
@@ -82,7 +91,10 @@ class Image(models.Model):
     content_type = models.ForeignKey(Types, verbose_name="Тип изображения")
     is_on = models.BooleanField(verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_Images'
         ordering = ["publisher", "add_date"]
         get_latest_by = "-add_date"
@@ -109,11 +121,15 @@ class Publishers(models.Model):
     country = models.CharField(max_length=50, verbose_name="Страна")
     website = models.URLField(max_length=255, blank=True, verbose_name="Адрес Сайта")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         ordering = ["city", "name"]
 
-    class Admin:
-        pass
+    class Admin(object):
+        def __init__(self):
+            pass
 
     def countA(self):
         return Books.objects.filter(book_publisher=self.id).count()
@@ -132,11 +148,15 @@ class Author(models.Model):
     email = models.EmailField(max_length=125, blank=True, verbose_name="E-Mail")
     headshot = models.ImageField(upload_to="image_base/authors/%Y/%m/%d", blank=True, verbose_name="Фото")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         ordering = ["email"]
 
-    class Admin:
-        pass
+    class Admin(object):
+        def __init__(self):
+            pass
 
     def countA(self):
         return Books.objects.filter(book_publisher=self.id).count()
@@ -163,7 +183,10 @@ class BookCategories(models.Model):
     is_root = models.BooleanField(blank=True, verbose_name="В корне")
     is_on = models.BooleanField(verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_Category'
         ordering = ["publisher", "add_date"]
         get_latest_by = "-add_date"
@@ -214,7 +237,10 @@ class Books(models.Model):
     is_secret = models.BooleanField(verbose_name="Не отображать пользователям")
     is_on = models.BooleanField(verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_Records'
         ordering = ["publisher", "add_date"]
         get_latest_by = "-add_date"
@@ -233,7 +259,10 @@ class BooksImages(models.Model):
     images = models.ManyToManyField(Image, symmetrical=False, verbose_name="Изображения")
     is_on = models.BooleanField(verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_Records_Images'
         ordering = ["parent"]
         get_latest_by = "-parent"
@@ -249,7 +278,10 @@ class BooksFiles(models.Model):
     files = models.ManyToManyField(File, symmetrical=False, verbose_name="Файлы")
     is_on = models.BooleanField(verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_Records_Files'
         ordering = ["parent"]
         get_latest_by = "-parent"
@@ -274,16 +306,23 @@ class BooksNews(models.Model):
     tags = models.ManyToManyField(Tag, symmetrical=False, blank=True, verbose_name="Поисковые теги")
     is_on = models.BooleanField(default=True, verbose_name="Вкл.")
 
-    class Meta:
+    class Meta(object):
+        def __init__(self):
+            pass
+
         db_table = 'BK_News'
         ordering = ["add_date"]
         get_latest_by = "-add_date"
         verbose_name = "Новости библиотеки"
         verbose_name_plural = "Новости библиотеки"
 
+    def __init__(self, *args, **kwargs):
+        super(BooksNews, self).__init__(*args, **kwargs)
+        self.verb_title = cds.exclude_bad_symbols(cds.translit_srt(self.title))
+
     def save(self, *args, **kwargs):
         if (self.verb_title is None):
-            self.verb_title = cds.exclude_bad_symbols(cds.translit_srt(self.title))
+            pass
         super(BooksNews, self).save(*args, **kwargs)
 
     def __unicode__(self):

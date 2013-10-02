@@ -6,7 +6,7 @@ from Books.Home.models import *
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('id','first_name', 'last_name', 'email')
+    list_display = ('id', 'first_name', 'last_name', 'email')
     search_fields = ('first_name', 'last_name')
 
 
