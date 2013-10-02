@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block page_top %}<h1>Publishers <span>(full list)</span></h1>{% endblock %}
+{% block content %}<ul>{% for publisher in object_list %}<li>{{ publisher.name }}</li>{% endfor %}</ul>{% endblock %}
+{% block footer %}<p> Генератор: {{generator_content}} </p> {% endblock %}

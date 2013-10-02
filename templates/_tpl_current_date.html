@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  {% include "_tpl_head.html" %} 
+  {% include "_tpl_style.html" %}
+</head>
+<body>
+  <div id="summary">
+    <h1>{{title}} <span>(base-templated page)</span></h1>
+    <table class="meta">
+      <tr>
+        <th>Request Method:</th>
+        <td>GET</td>
+      </tr>
+    </table>
+  </div>
+  <div id="info">    
+      <p>
+      It is now {{out_date_string}}
+      </p>
+  </div>
+
+  <div id="explanation">
+    <p>
+      Converted by {{generator_content}}
+    </p>
+  </div>
+</body>
+</html>
