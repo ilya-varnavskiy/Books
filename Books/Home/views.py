@@ -4,6 +4,7 @@ __author__ = 'varnavis'
 from django.http import HttpResponse
 import ConstantsDefined as cds
 
+
 def load_home(request):
     """
 
@@ -11,6 +12,7 @@ def load_home(request):
     :return:
     """
     return HttpResponse("Домашняя страница Books \r\n %s" % str(request))
+
 
 def thanks(request):
     from django.shortcuts import render_to_response
@@ -23,6 +25,7 @@ def thanks(request):
            }
     dct = cds.get_csrf_metadata(request, **dct)
     return render_to_response('contact_thanks.html', dct)
+
 
 def contact(request):
     import django

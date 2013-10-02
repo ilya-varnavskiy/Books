@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import ConstantsDefined as cds
 
+
 class Types(models.Model):
     publisher = models.ForeignKey(User, verbose_name="Создатель")
     #parent = models.ForeignKey('self', blank=True, verbose_name="Родитель")
@@ -25,6 +26,7 @@ class Types(models.Model):
     def __unicode__(self):
         return u"[{1}] {0}".format(self.title, self.prefix)
 
+
 class Tag(models.Model):
     publisher = models.ForeignKey(User, verbose_name="Создатель")
     tag_name = models.CharField(max_length=255, unique=True, verbose_name="Тэговое слово")
@@ -43,6 +45,7 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return self.tag_name
+
 
 class File(models.Model):
     publisher = models.ForeignKey(User, verbose_name="Создатель")
@@ -70,6 +73,7 @@ class File(models.Model):
     def __unicode__(self):
         return self.file_name
 
+
 class Image(models.Model):
     publisher = models.ForeignKey(User, verbose_name="Создатель")
     image_name = models.CharField(max_length=255, verbose_name="Название")
@@ -96,6 +100,7 @@ class Image(models.Model):
     def __unicode__(self):
         return self.image_name
 
+
 class Publishers(models.Model):
     name = models.CharField(max_length=30, verbose_name="Название")
     address = models.CharField(max_length=50, verbose_name="Адрес")
@@ -118,6 +123,7 @@ class Publishers(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class Author(models.Model):
     salutation = models.CharField(max_length=10, blank=True, verbose_name="Приветсвие")
@@ -145,6 +151,7 @@ class Author(models.Model):
         "Returns the person's full name."
         return '%s %s %s' % (self.salutation, self.first_name, self.last_name)
     full_name = property(_get_full_name)
+
 
 class BookCategories(models.Model):
     publisher = models.ForeignKey(User, verbose_name="Создатель")
@@ -186,6 +193,7 @@ class BookCategories(models.Model):
         stat += u"-usr_hide" if self.is_secret else u""
         return u"[{1}] {0} (id:{2})".format(self.title, stat, self.id)
 
+
 class Books(models.Model):
     publisher = models.ForeignKey(User, verbose_name="Создатель")
     parent = models.ForeignKey(BookCategories, verbose_name="Родитель")
@@ -219,6 +227,7 @@ class Books(models.Model):
     def __unicode__(self):
         return u"[{1}] {0}".format(self.title, self.id)
 
+
 class BooksImages(models.Model):
     parent = models.ForeignKey(Books, unique=True, verbose_name="Связь с записями книг")
     images = models.ManyToManyField(Image, symmetrical=False, verbose_name="Изображения")
@@ -234,6 +243,7 @@ class BooksImages(models.Model):
     def __unicode__(self):
         return u"[{1}] Изображения к книге #{0}".format(self.parent, self.id)
 
+
 class BooksFiles(models.Model):
     parent = models.ForeignKey(Books, unique=True, verbose_name="Связь с FAQ")
     files = models.ManyToManyField(File, symmetrical=False, verbose_name="Файлы")
@@ -248,6 +258,7 @@ class BooksFiles(models.Model):
 
     def __unicode__(self):
         return u"[{1}] Файлы к книге #{0}".format(self.parent, self.id)
+
 
 class BooksNews(models.Model):
     publisher = models.ForeignKey(User, verbose_name="Создатель")

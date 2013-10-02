@@ -3,14 +3,16 @@ __author__ = 'varnavis'
 import os
 
 BASE_ROOT = os.path.dirname(__file__)
-BASE_PREF = "/" #"http://{0}/".format(Req.get_host())
+BASE_PREF = "/"  #"http://{0}/".format(Req.get_host())
 
 MEDIA_DIR_ROOT = os.path.join(BASE_ROOT, 'media/').replace('\\','/')
+
 
 def get_csrf_metadata(request, **kwds):
     from django.core.context_processors import csrf
     kwds.update(csrf(request))
     return kwds
+
 
 def get_metadata():
     import django
@@ -31,11 +33,13 @@ def get_metadata():
                     "keywords": 'Books, library',
                 })
 
+
 def gen_head_tags(title = "Unknown page", charset = "utf-8"):
     tag = "<head><meta charset=\"{0}\">".format(charset)
     tag += "<title>{0}</title>".format(title)
     tag += "<meta name=\"{0}\" content=\"{1}\"></head>".format("robots","NONE,NOARCHIVE")
     return tag
+
 
 def gen_head_tpl(title = "Unknown page"):
     from django.template.loader import get_template
@@ -44,12 +48,14 @@ def gen_head_tpl(title = "Unknown page"):
     html = t.render(Context({'title': title}))
     return html
 
+
 def gen_style_tpl():
     from django.template.loader import get_template
     from django.template import Context
     t = get_template('_tpl_style.html')
     html = t.render(Context())
     return html
+
 
 def current_datetime(request):
     import datetime
@@ -60,6 +66,7 @@ def current_datetime(request):
     html += "<body>It is now {0}.</body>".format(now)
     html += "</html>"
     return HttpResponse(html)
+
 
 def current_datetime2(request):
     import django
@@ -87,6 +94,7 @@ def current_datetime2(request):
     #html += str(request)
     return HttpResponse(html)
 
+
 def display_meta(request):
     from django.http import HttpResponse
     values = request.META.items()
@@ -97,6 +105,7 @@ def display_meta(request):
         html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
     return HttpResponse('<table>%s</table>' % '\n'.join(html))
 
+
 def translit_srt(str):
     symbols = ( u"абвгдеёзийклмнопрстуфхъыьэАБВГДЕЁЗИЙКЛМНОПРСТУФХЪЫЬЭ",
                 u"abvgdeezijklmnoprstufh-y_eABVGDEEZIJKLMNOPRSTUFH-Y_E")
@@ -104,6 +113,7 @@ def translit_srt(str):
     tr = {ord(a):ord(b) for a, b in zip(*symbols)}
 
     return str.translate(tr)
+
 
 def exclude_bad_symbols(str):
     import re
