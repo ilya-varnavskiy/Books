@@ -125,6 +125,8 @@ class Publishers(models.Model):
         def __init__(self):
             pass
 
+        verbose_name = "Издатель"
+        verbose_name_plural = "Издатель Книг"
         ordering = ["city", "name"]
 
     class Admin(object):
@@ -152,6 +154,8 @@ class Author(models.Model):
         def __init__(self):
             pass
 
+        verbose_name = "Автор(ы)"
+        verbose_name_plural = "Автор(ы) Книг"
         ordering = ["email"]
 
     class Admin(object):

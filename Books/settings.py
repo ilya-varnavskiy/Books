@@ -8,7 +8,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('marsel' , 'marsel@books.pro'), #same pass
+     ('marsel-admin' , 'marsel@books.pro'), #same pass
 )
 
 MANAGERS = ADMINS
@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/db/books_db.sqlite',                      # Or path to database file if using sqlite3.
+        'NAME': os.path.join(cds.BASE_ROOT, 'db/books_data.sqlite').replace('\\','/'),                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         #'USER': '',
         #'PASSWORD': '',

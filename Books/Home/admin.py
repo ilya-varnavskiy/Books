@@ -23,6 +23,19 @@ class BookAdmin(admin.ModelAdmin):
 class PublisherAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 
+
+class BooksCategoriesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'publisher', 'add_date', 'is_root', 'is_secret')
+    list_filter = ('id',)
+
+
+class BooksNewsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'bk_object', 'breif_descr', 'add_date', 'expire_date')
+    date_hierarchy = 'expire_date'
+
+
 admin.site.register(Publishers, PublisherAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Books, BookAdmin)
+admin.site.register(BookCategories, BooksCategoriesAdmin)
+admin.site.register(BooksNews, BooksNewsAdmin)

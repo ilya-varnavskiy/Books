@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^$', 'Books.Home.views.load_home', name='load_home'),
     url(r'^feedback/$', 'Books.Home.views.contact', name='contact'),
     url(r'^feedback/thanks/$', 'Books.Home.views.thanks', name='thanks'),
-    # url(r'^Books/', include('Books.foo.urls')),
+    #url(r'^Books/', include('Books.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
