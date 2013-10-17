@@ -22,6 +22,15 @@ th { width:12em; text-align:right; color:#666; padding-right:.5em; }
 #summary { background: #ffc; }
 #explanation { background:#eee; border-bottom: 0px none; }
 </style>{% endblock %}
+{% block header_external_libs %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/scriptaculous/1.9.0/scriptaculous.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js"></script>
+{% endblock %}
 {% block head_scripts %}{% endblock %}
 {% block head_end %}</head>{% endblock %}
 {% block body_start %}<body>{% endblock %}
