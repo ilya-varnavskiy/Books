@@ -1,10 +1,9 @@
 # -*- coding: UTF-8 -*-
 __author__ = 'varnavis'
 import os
-from django.http.request import HttpRequest as Req
 
 BASE_ROOT = os.path.dirname(__file__)
-BASE_PREF = '/'  #"http://{0}/".format(Req.get_host())
+BASE_PREF = '/' #"http://{0}/".format(Req().get_host())
 
 MEDIA_DIR_ROOT = os.path.join(BASE_ROOT, 'media/').replace('\\', '/')
 
