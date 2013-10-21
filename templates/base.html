@@ -1,28 +1,30 @@
 {% block Doc_Type %}<!DOCTYPE HTML>{% endblock %}
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="Content-Language" content="ru">
-{% block head_meta %}<title>{{title_content}}</title>
-<meta name="GENERATOR" content="{{generator_content}}">{% endblock %} 
-{% block head_style %}<style type="text/css">
-html * { padding:0; margin:0; }
-body * { padding:10px 20px; }
-body * * { padding:0; }
-body { font:small sans-serif; background:#eee; }
-body > div { border-bottom:1px solid #ddd; }
-h1 { font-weight:normal; margin-bottom:.4em; }
-h1 span { font-size:60%; color:#666; font-weight:normal; }
-table { border:none; border-collapse: collapse; width:100%; }
-td, th { vertical-align:top; padding:2px 3px; }
-th { width:12em; text-align:right; color:#666; padding-right:.5em; }
-#info { background:#f6f6f6; }
-#info ol { margin: 0.5em 4em; }
-#info ol li { font-family: monospace; }
-#summary { background: #ffc; }
-#explanation { background:#eee; border-bottom: 0px none; }
-</style>{% endblock %}
-{% block header_external_libs %}
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Language" content="ru">
+	<link rel="shortcut icon" href="/media/favicon.png" type="image/x-png">
+	<link rel="alternate" href="/media/favicon.ico" type="image/x-ico">
+	{% block head_meta %}
+		<title>{{ meta_data.title }}</title>
+		<meta name="DISTRIBUTION" content="{{ meta_data.distribution }}">
+		<meta name="RESOURCE-TYPE" content="{{ meta_data.resource_type }}">
+		<meta name="DOCUMENT-STATE" content="{{ meta_data.document_state }}">
+		<meta name="URL" content="{{ meta_data.url }}">
+		<meta name="ROBOTS" content="{{ meta_data.robots }}">
+		<meta name="REVISIT-AFTER" content="{{ meta_data.revisit_after }}">
+		<meta name="RATING" content="{{ meta_data.rating }}">
+		<meta name="GENERATOR" content="{{ meta_data.generator }}">
+		<meta name="AUTHOR" content="{{ meta_data.author }}">
+		<meta name="TITLE" content="{{ meta_data.meta_title }}">
+		<meta name="COPYRIGHT" content="{{ meta_data.copyright }}">
+		<meta name="DESCRIPTION" content="{{ meta_data.description }}">
+		<meta name="KEYWORDS" content="{{ meta_data.keywords }}">
+		<meta name="last-modified" http-equiv="LAST-MODIFIED" content="{{ meta_data.last_modified }}">
+		<meta name="expires" http-equiv="EXPIRES" content="{{ meta_data.expires }}">
+	{% endblock %}
+	<link rel="stylesheet" type="text/css" href="/media/style/style.css" title="style" />
+	{% block head_style %}{% endblock %}
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
@@ -30,18 +32,134 @@ th { width:12em; text-align:right; color:#666; padding-right:.5em; }
 	<script src="//ajax.googleapis.com/ajax/libs/scriptaculous/1.9.0/scriptaculous.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js"></script>
-{% endblock %}
-{% block head_scripts %}{% endblock %}
-{% block head_end %}</head>{% endblock %}
+	{% block header_external_libs %}{% endblock %}
+	{% block head_scripts %}{% endblock %}
+	{% block head_end %}</head>{% endblock %}
 {% block body_start %}<body>{% endblock %}
-<div id="summary">
-{%  block page_top %}<h1>{{title_content}} <span>(base-templated page)</span></h1>{% endblock %}
-</div>
-<div id="info">    
-{% block content %}<p> It is now {{out_date_string}} </p>{% endblock %}
-</div>
-<div id="explanation">
-{% block footer %}<p> Converted by {{generator_content}} </p>{% endblock %}
+<div id="main">
+	<div id="header">
+		<div id="logo">
+			<div id="logo_text">
+				<!-- class="logo_colour", allows you to change the colour of the text -->
+				{% block page_top %}
+					<h1><a href="/"><span class="logo_colour">{{ meta_data.header_title }}</span></a></h1>
+
+					<h2>{{ meta_data.header_sub_title }}</h2>
+				{% endblock %}
+			</div>
+		</div>
+		<div id="menubar">
+			{% block full_menu %}
+				<ul id="menu">
+					<!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+					{% block inner_menu_list %}
+						<li class="selected"><a href="examples.html">Каталог</a></li>
+						<li><a href="page.html">Авторы</a></li>
+						<li><a href="another_page.html">Издательства</a></li>
+						<li><a href="another_page.html">Новости</a></li>
+						<li><a href="contact.html">Обратная связь</a></li>
+					{% endblock %}
+				</ul>
+			{% endblock %}
+		</div>
+	</div>
+	<div id="site_content">
+		<div class="sidebar">
+			<!-- insert your sidebar items here -->
+			{% block side_bar %}
+				{% block page_nav %}
+					{% if content_data.pageNav != NULL %}
+					{% endif %}
+				{% endblock %}
+
+				{% block lates_news %}
+					{% if content_data.lNews != NULL %}
+					<h3>Latest News</h3>
+					<h4>New Website Launched</h4>
+					<h5>January 1st, 2010</h5>
+
+					<p>2010 sees the redesign of our website. Take a look around and let us know what you
+					   think.<br /><a href="#">Read more</a></p>
+
+					<p></p>
+					<h4>New Website Launched</h4>
+					<h5>January 1st, 2010</h5>
+
+					<p>2010 sees the redesign of our website. Take a look around and let us know what you
+					   think.<br /><a href="#">Read more</a></p>
+					{% endif %}
+				{% endblock %}
+
+				{% block useful_links %}
+					{% if content_data.uLink != NULL %}
+					<h3>Полезные ссылки</h3>
+					<ul>
+						<li><a href="#">link 1</a></li>
+						<li><a href="#">link 2</a></li>
+						<li><a href="#">link 3</a></li>
+						<li><a href="#">link 4</a></li>
+					</ul>
+					{% endif %}
+				{% endblock %}
+
+				{% block search_form %}
+					{% if content_data.notShowSF != True %}
+					<h3>Поиск:</h3>
+					<form method="post" action="#" id="search_form">
+						{% csrf_token %}
+						<p>
+							<input class="search" type="text" name="search_field" value="Введите запрос..." />
+							<input name="search"
+							       type="image"
+							       style="border: 0; margin: 0 0 -9px 5px;"
+							       src="/media/style/search.png"
+							       alt="Поиск по справочнику"
+							       title="Поиск по справочнику" />
+						</p>
+					</form>
+					{% endif %}
+				{% endblock %}
+			{% endblock %}
+		</div>
+		<div id="content">
+			{% block content %}
+				<!-- insert the page content here -->
+				<h1>Welcome to the colour_blue template</h1>
+
+				<p>This standards compliant, simple, fixed width website template is released as an 'open source' design
+				   (under a <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0
+				                                                                 Licence</a>), which means that you are
+				   free
+				   to download and use it for anything you want (including modifying and amending it). All I ask is that
+				   you
+				   leave the 'design from HTML5webtemplates.co.uk' link in the footer of the template, but other than
+				   that...</p>
+
+				<p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be
+				   validated using the links in the footer.</p>
+
+				<p>You can view more free HTML5 web templates <a href="http://www.html5webtemplates.co.uk">here</a>.</p>
+
+				<p>This template is a fully functional 5 page website, with an <a href="examples.html">examples</a> page
+				   that gives examples of all the styles available with this design.</p>
+
+				<h2>Browser Compatibility</h2>
+
+				<p>This template has been tested in the following browsers:</p>
+				<ul>
+					<li>Internet Explorer 8</li>
+					<li>Internet Explorer 7</li>
+					<li>FireFox 3.5</li>
+					<li>Google Chrome 6</li>
+					<li>Safari 4</li>
+				</ul>
+			{% endblock %}
+		</div>
+	</div>
+	<div id="content_footer"></div>
+	<div id="footer">
+		{% block footer %}<p>{{ meta_data.copyright }}&nbsp;|&nbsp;Generated by {{ meta_data.generator }}</p>{% endblock %}
+	</div>
 </div>
 </body>
 </html>
