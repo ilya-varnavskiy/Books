@@ -68,12 +68,19 @@
 			<!-- insert your sidebar items here -->
 			{% block side_bar %}
 				{% block page_nav %}
-					{% if content_data.pageNav != NULL %}
+					{% if content_data.pageNav != NULL and content_data.pageNav.cnt > 0 %}
+						<h3>Категории:</h3>
+						<ul>
+							{% for cat in content_data.pageNav.data %}
+							<li>{{ cat.name }}</li>
+							{% endfor %}
+						</ul>
 					{% endif %}
 				{% endblock %}
 
 				{% block lates_news %}
-					{% if content_data.lNews != NULL %}
+					{% if content_data.lNews != NULL and content_data.lNews.cnt > 0 %}
+						{{ content_data.lNews }}
 					<h3>Latest News</h3>
 					<h4>New Website Launched</h4>
 					<h5>January 1st, 2010</h5>

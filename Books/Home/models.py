@@ -193,7 +193,9 @@ class Author(models.Model):
 
 class BookCategories(models.Model):
 	publisher = models.ForeignKey(User, verbose_name="Создатель")
-	childs = models.ManyToManyField('self', symmetrical=False, blank=True, verbose_name="потомки")
+	#childs = models.ManyToManyField('self', symmetrical=False, blank=True, verbose_name="потомки")
+	# childs необходимо заменить на ForeignKey
+	parent = models.ForeignKey('self', blank=True, null=True, verbose_name="Родитель")
 	title = models.CharField(max_length=255, verbose_name="Название")
 	verb_title = models.CharField(max_length=255, blank=True, verbose_name="Code Page")
 	descr = models.TextField(blank=True, verbose_name="Описание")
@@ -216,6 +218,8 @@ class BookCategories(models.Model):
 	def __init__(self, *args, **kwargs):
 		super(BookCategories, self).__init__(*args, **kwargs)
 		self.verb_title = Cds.exclude_bad_symbols(Cds.translit_srt(self.title))
+		if self.parent is None and self.is_root is False:
+			self.is_root = True
 
 	def count_a(self):
 		return Books.objects.filter(parent=self.id).count()
@@ -235,12 +239,17 @@ class BookCategories(models.Model):
 	def save(self, *args, **kwargs):
 		if self.verb_title is None:
 			pass
+		if self.parent is None and self.is_root is False:
+			pass
 		super(BookCategories, self).save(*args, **kwargs)
 
 	def __str__(self):
 		return self.title
 
 	def __unicode__(self):
+		return self.title
+
+	def toAdmStr(self):
 		stat = u"root" if self.is_root else u"child"
 		stat += u"-usr_hide" if self.is_secret else u""
 		return u"[{1}] {0} (id:{2})".format(self.title, stat, self.id)
@@ -252,13 +261,15 @@ class Books(models.Model):
 	add_date = models.DateField(default=datetime.date.today, verbose_name="Дата создания")
 	title = models.CharField(max_length=255, verbose_name="Название")
 	verb_title = models.CharField(max_length=255, blank=True, verbose_name="Code Page")
-	authors = models.ManyToManyField(Author, symmetrical=False, blank=True,
-									 verbose_name="Авторы")  #related_name='they_link_me'
+	authors = models.ManyToManyField(Author, symmetrical=False, blank=True, verbose_name="Авторы")
 	book_publisher = models.ForeignKey(Publishers, verbose_name="Издатель")
 	publication_date = models.DateField(verbose_name="Дата публикации книги")
 	breif_descr = models.CharField(max_length=255, verbose_name="Сокращённое описание")
 	descr = models.TextField(blank=True, verbose_name="Описание")
 	tags = models.ManyToManyField(Tag, symmetrical=False, blank=True, verbose_name="Поисковые теги")
+	tbImage = models.ForeignKey(Image, blank=True, null=True, related_name='thumbImg', verbose_name="Иконка")
+	images = models.ManyToManyField(Image, symmetrical=False, verbose_name="Изображения")
+	files = models.ManyToManyField(File, symmetrical=False, verbose_name="Файлы")
 	bk_isbn = models.CharField(max_length=25, verbose_name="ISBN код")
 	bk_lang = models.CharField(max_length=60, verbose_name="Язык книги")
 	bk_pages = models.PositiveIntegerField(verbose_name="Количество страниц")
@@ -287,7 +298,7 @@ class Books(models.Model):
 		data = self.authors.all()
 		k = 0
 
-		while k < data.__len__():
+		while k<data.__len__():
 			if export.__len__() is not 0: export += ', '
 			export += '%s' % data[k].full_name
 			k += 1
@@ -305,7 +316,8 @@ class Books(models.Model):
 		return export
 
 	def save(self, *args, **kwargs):
-		if self.verb_title is None: pass
+		if self.verb_title is None:
+			pass
 		super(Books, self).save(*args, **kwargs)
 
 	def __str__(self):
@@ -318,57 +330,13 @@ class Books(models.Model):
 	TagsUnicode = property(fget=getTagsUnicode, doc="Список тегов")
 
 
-class BooksImages(models.Model):
-	parent = models.ForeignKey(Books, unique=True, verbose_name="Связь с записями книг")
-	images = models.ManyToManyField(Image, symmetrical=False, verbose_name="Изображения")
-	is_on = models.BooleanField(verbose_name="Вкл.")
-
-	class Meta(object):
-		def __init__(self):
-			pass
-
-		db_table = 'BK_Records_Images'
-		ordering = ["parent"]
-		get_latest_by = "-parent"
-		verbose_name = "Изображения к записям книг"
-		verbose_name_plural = "Изображения к записям книг"
-
-	def __init__(self, *args, **kwargs):
-		super(BooksImages, self).__init__(*args, **kwargs)
-
-	def __unicode__(self):
-		return u"[{1}] Изображения к книге #{0}".format(self.parent, self.id)
-
-
-class BooksFiles(models.Model):
-	parent = models.ForeignKey(Books, unique=True, verbose_name="Связь с FAQ")
-	files = models.ManyToManyField(File, symmetrical=False, verbose_name="Файлы")
-	is_on = models.BooleanField(verbose_name="Вкл.")
-
-	class Meta(object):
-		def __init__(self):
-			pass
-
-		db_table = 'BK_Records_Files'
-		ordering = ["parent"]
-		get_latest_by = "-parent"
-		verbose_name = "Файлы к записям книг"
-		verbose_name_plural = "Файлы к записям книг"
-
-	def __init__(self, *args, **kwargs):
-		super(BooksFiles, self).__init__(*args, **kwargs)
-
-	def __unicode__(self):
-		return u"[{1}] Файлы к книге #{0}".format(self.parent, self.id)
-
-
 class BooksNews(models.Model):
 	publisher = models.ForeignKey(User, verbose_name="Создатель")
 	title = models.CharField(max_length=255, verbose_name="Название")
 	verb_title = models.CharField(max_length=255, blank=True, verbose_name="Code Page")
-	nws_image = models.OneToOneField(Image, blank=True, verbose_name="Изображение")
-	nws_file = models.OneToOneField(File, blank=True, verbose_name="Файл")
-	bk_object = models.OneToOneField(Books, blank=True, verbose_name="Книга")
+	nws_image = models.ForeignKey(Image, blank=True, null=True, verbose_name="Изображение")
+	nws_file = models.ManyToManyField(File, symmetrical=False, blank=True, verbose_name="Файл")
+	bk_object = models.ManyToManyField(Books, symmetrical=False, blank=True, verbose_name="Книга")
 	add_date = models.DateField(default=datetime.date.today, verbose_name="Дата создания")
 	expire_date = models.DateField(blank=True, verbose_name="Дата завершения показа")
 	breif_descr = models.CharField(max_length=255, verbose_name="Сокращённое описание")
@@ -390,10 +358,23 @@ class BooksNews(models.Model):
 		super(BooksNews, self).__init__(*args, **kwargs)
 		self.verb_title = Cds.exclude_bad_symbols(Cds.translit_srt(self.title))
 
+	def __unicode__(self):
+		return u"[{1}] Новость #{0}".format(self.id, self.verb_title)
+
 	def save(self, *args, **kwargs):
 		if self.verb_title is None:
 			pass
 		super(BooksNews, self).save(*args, **kwargs)
 
-	def __unicode__(self):
-		return u"[{1}] Новость #{0}".format(self.id, self.verb_title)
+	def getBooksUnicode(self):
+		export = ''
+		data = self.bk_object.all()
+		k = 0
+
+		while k<data.__len__():
+			if export.__len__() is not 0: export += ', '
+			export += '%s [ISBN:%s]' % data[k].title, data[k].bk_isbn
+			k += 1
+		return export
+
+	BooksUnicode = property(fget=getBooksUnicode, doc="Список книг")
