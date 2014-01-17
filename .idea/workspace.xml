@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cfe33386-12fe-4862-87c3-7505d4747a11" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/books_data6.sqlite" afterPath="$PROJECT_DIR$/db/books_data6.sqlite" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Books.iws" />
@@ -37,7 +38,7 @@
       <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Books/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="59" selection-start="452" selection-end="452" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="2805">
+            <state line="23" column="76" selection-start="858" selection-end="858" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="2805">
               <folding />
             </state>
           </provider>
@@ -61,10 +62,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Books/Home/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="95" column="28" selection-start="2630" selection-end="2630" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="2310">
+            <state line="3" column="30" selection-start="104" selection-end="104" vertical-scroll-proportion="0.01898734" vertical-offset="30" max-vertical-offset="2310">
               <folding />
             </state>
           </provider>
@@ -73,16 +74,16 @@
       <file leaf-file-name="ConstantsDefined.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConstantsDefined.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="53" selection-start="3908" selection-end="3908" vertical-scroll-proportion="0.0" vertical-offset="1234" max-vertical-offset="2160">
+            <state line="138" column="53" selection-start="3908" selection-end="3908" vertical-scroll-proportion="0.0" vertical-offset="2070" max-vertical-offset="2160">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="43" selection-start="3512" selection-end="3512" vertical-scroll-proportion="0.24944568" vertical-offset="0" max-vertical-offset="975">
+            <state line="85" column="29" selection-start="3795" selection-end="3795" vertical-scroll-proportion="0.0" vertical-offset="1275" max-vertical-offset="2655">
               <folding />
             </state>
           </provider>
@@ -91,7 +92,7 @@
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Books/Home/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="248" column="26" selection-start="7853" selection-end="7853" vertical-scroll-proportion="0.0" vertical-offset="3285" max-vertical-offset="5775">
+            <state line="248" column="26" selection-start="7853" selection-end="7853" vertical-scroll-proportion="0.0" vertical-offset="3720" max-vertical-offset="5775">
               <folding />
             </state>
           </provider>
@@ -119,6 +120,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitLogSettings">
+    <option name="myStructureFilterPaths" />
     <option name="myDateState">
       <MyDateState />
     </option>
@@ -146,8 +148,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="y" value="22" />
     <option name="width" value="1680" />
-    <option name="height" value="1050" />
+    <option name="height" value="936" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -203,7 +206,7 @@
     <property name="options.lastSelected" value="JavaScript.Libraries" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../PyCharm/Projects/Books/templates" />
-    <property name="FullScreen" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
@@ -367,6 +370,7 @@
       <method />
     </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <browser start="false" url="" with-js-debugger="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -507,10 +511,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="22" width="1680" height="936" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32704404" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23031026" sideWeight="0.60021436" order="3" side_tool="false" content_ui="tabs" />
@@ -630,27 +634,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="272" selection-end="272" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Books/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="59" selection-start="452" selection-end="452" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2790">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Books/Home/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="34" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1215">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ConstantsDefined.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="138" column="53" selection-start="3908" selection-end="3908" vertical-scroll-proportion="0.0" vertical-offset="1234" max-vertical-offset="2160">
@@ -665,16 +648,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Books/Home/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="28" selection-start="2630" selection-end="2630" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="2310">
+        <state line="85" column="29" selection-start="3795" selection-end="3795" vertical-scroll-proportion="0.0" vertical-offset="1275" max-vertical-offset="2655">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/Books/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="43" selection-start="3512" selection-end="3512" vertical-scroll-proportion="0.24944568" vertical-offset="0" max-vertical-offset="975">
+        <state line="23" column="76" selection-start="858" selection-end="858" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2790">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="272" selection-end="272" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Books/Home/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="34" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1215">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Books/Home/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="30" selection-start="104" selection-end="104" vertical-scroll-proportion="0.01898734" vertical-offset="30" max-vertical-offset="2310">
           <folding />
         </state>
       </provider>
